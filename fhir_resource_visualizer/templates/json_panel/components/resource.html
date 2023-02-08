@@ -1,0 +1,33 @@
+{% load visualizer_tags mathfilters %}
+
+<div class="resource-depth-{{depth}}">
+    {% if resource|is_dict %}
+        {% for key, value in resource.items %}
+            {% if value|is_dict %}
+            <div class="resource-field hideable{%if key in collapsed_fields%} to-hide{%endif%}">
+                <p class="json-key"><b>{{key|split_camel_case}} :</b></p>
+                {% include "visualizer/components/resource.html" with resource=value depth=depth|add:1|mod:4 %}
+            </div>
+
+            {% elif value|is_list %}
+            <div class="resource-field hideable{%if key in collapsed_fields%} to-hide{%endif%}">
+                <p class="json-key"><b>{{key|split_camel_case}} :</b></p>
+                <div class="resource-field resource-depth-{{depth|add:1|mod:4}}">
+                    {% for element in value %}
+                    {% include "visualizer/components/resource.html" with resource=element depth=depth|add:2|mod:4 %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% else %}
+            <div class="resource-field not-hideable">
+                <p class="json-key"><b>{{key|split_camel_case}} :</b></p><p>{{value}}</p>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+    <div class="resource-field">
+        {{resource}}
+    </div>
+    {% endif %}
+</div>

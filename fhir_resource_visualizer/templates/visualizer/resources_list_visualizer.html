@@ -1,0 +1,8 @@
+{% extends "index.html" %}
+{% load visualizer_tags %}
+
+{% block header_content %}
+<div class="col">
+    <h1>{{resource.resourceType|split_camel_case}}</h1>
+</div>
+{% endblock header_content %}

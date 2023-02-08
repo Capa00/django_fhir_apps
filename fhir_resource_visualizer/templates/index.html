@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %} FHIR Resources Visualizer {% endblock title %}
+
+{% block index %}
+    <div class="container">
+        {% block header %}
+        <div class="row page-header">
+            <style>
+                .page-header {
+                      top:0;
+                      left:0;
+                      width:100%;
+                      min-height: 90px;
+                      background-color: #D0DAEE;
+                }
+            </style>
+            {% block header_content %}
+            <h1>FHIR RESOURCE VISUALIZER</h1>
+            {% endblock header_content %}
+        </div>
+        {% endblock header %}
+
+        {% block body %}
+        <div class="row page-body">
+            {% block body_content %} {% endblock body_content %}
+        </div>
+        {% endblock body %}
+
+        {% block footer %}
+        <div class=" row page-footer">
+            <style>
+                .page-footer {
+                      bottom:0;
+                      left:0;
+                      width:100%;
+                      height: 90px;
+                      background-color: #D0DAEE;
+                }
+            </style>
+            {% block footer_content %}
+            {% endblock footer_content %}
+        </div>
+        {% endblock footer %}
+    </div>
+{% endblock index %}
+
+{% block extra_js %} {% endblock extra_js %}

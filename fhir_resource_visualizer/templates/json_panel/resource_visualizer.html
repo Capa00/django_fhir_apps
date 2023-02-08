@@ -1,0 +1,92 @@
+{% load visualizer_tags %}
+
+{% block header_content %}
+
+{% comment %}
+<div class="col">
+    <h1>{{resource.resourceType|split_camel_case}}</h1>
+    <h5>id: {{resource.id}}</h5>
+</div>
+{% endcomment %}
+{% endblock header_content %}
+
+{% block body_content %}
+<style>
+    .resource-depth-0 {
+        background: #ccff8c85;
+    }
+    .resource-depth-1 {
+        background: #76aade;
+    }
+    .resource-depth-2 {
+        background: #80c1e8;
+    }
+    .resource-depth-3 {
+        background: #8c9fff;
+    }
+
+    .resource-field {
+        border: 2px solid #00000054;
+        padding: 10px;
+        padding-left: 10px;
+        padding-bottom: 10px;
+        padding-top: 20px;
+        font-size: initial;
+    }
+
+    .resource-visualizer-container {
+        font-size: initial;
+    }
+
+    .resource-visualizer-container p {
+        margin: 0;
+        margin-bottom: 6px;
+    }
+</style>
+<div class="resource-visualizer-container">
+    <button type="button" id="btn_json_collapse" class="button" style="margin-bottom: 15px;">Collapse all</button>
+    <button type="button" id="btn_json_expand" class="button" style="margin-bottom: 15px;">Expand all</button>
+    {% include "visualizer/components/resource.html" with depth=0 %}
+</div>
+<script>
+    $( "#btn_json_collapse" ).click( function(e){
+        $(".hideable").addClass("to-hide")
+        $(".hideable").click()
+        e.stopPropagation()
+    })
+
+    $( "#btn_json_expand").click( function(e){
+        $(".hideable").removeClass("to-hide")
+        $(".hideable").click()
+        e.stopPropagation()
+    })
+
+    $(".hideable > .json-key").prepend(
+        $( `
+        <svg class="icon icon-arrow-down-big w-panel__icon" aria-hidden="true"
+            style="margin: 0 5 0 0;
+                border-radius: 4px;
+                background: #73AD21;
+                border: 2px solid #00000054;"
+        > <use href="#icon-arrow-down-big"></use> </svg>
+        ` )
+    )
+
+    $(".hideable").click( function(e){
+        console.log("click")
+        if( $(this).hasClass("to-hide") ){
+            $(this).children().hide()
+        } else {
+            $(this).children().show()
+        }
+        $(this).children(".json-key").show()
+        $(this).toggleClass("to-hide")
+        e.stopPropagation()
+    });
+
+    $(".not-hideable").click( function(e){ e.stopPropagation() });
+    $(".hideable.to-hide").click()
+    $(".hideable").toggleClass("to-hide")
+
+</script>
+{% endblock body_content %}
